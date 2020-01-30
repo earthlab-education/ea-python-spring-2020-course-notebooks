@@ -176,6 +176,7 @@ for total_num, notebook in enumerate(notebooks_to_rebuild):
 
     try:
         rebuild_notebook(notebook)
+        print("SUCCESS! I built:", notebook)
     except Exception as ex:
         traceback.print_exception(type(ex), ex, ex.__traceback__)
         problem_notebooks.append(notebook)
