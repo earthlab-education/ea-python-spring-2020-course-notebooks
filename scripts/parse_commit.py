@@ -5,6 +5,7 @@ From this list, we then parse out .ipynb files, .Rmd files, and image files (.jp
 
 with open("changed_files.txt") as f:
     content = f.readlines()
+    print("HERE:", content)
 content = [x.strip() for x in content]
 
 changed_notebooks = [line for line in content if line.endswith(".ipynb")]
