@@ -1,3 +1,7 @@
 .ipynb_checkpoints/
 # OS
 .DS_Store
+# pycharm files
+.idea/
+# This is created by the code - ignoring it
+tmp/
