@@ -164,7 +164,7 @@ signal.signal(signal.SIGALRM, handler)
 # set timeout
 signal.alarm(570)
 
-# --- Run, cleanup and convert noteboooks to markdown ---
+# --- Run, cleanup and convert notebooks to markdown ---
 
 problem_notebooks = []
 
