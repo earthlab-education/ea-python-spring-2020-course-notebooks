@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/spring-2020-course-notebooks
     docker:
-      - image: earthlab/r-python-eds-lessons-env:latest
+      - image: earthlab/earth-analytics-python-env:latest
 
     steps:
       - checkout
