@@ -42,6 +42,7 @@ jobs:
           working_directory: ~/earth-analytics-lessons
           no_output_timeout: 900
           command: |
+            python scripts/run_notebooks.py in-class-demos/*
             if [ -s changed_notebooks.txt ]; then
               filenames=$(cat changed_notebooks.txt)
               echo $filenames
