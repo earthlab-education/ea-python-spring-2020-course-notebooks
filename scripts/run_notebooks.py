@@ -8,10 +8,12 @@ corresponding jekyll markdown files.
 How to use
 
 from the root of earth-analytics-python run
-python scripts/generate_posts.py dir-name-here
 
+ python scripts/run_notebooks.py in-class-demos/*
+
+# This is failing now so let's come back to the dir parameter later.
 the code will figure out if it's a workshop or course and build accordingly
-python scripts/generate_posts.py dir-name-here
+python scripts/run_notebooks.py dir dir-name-here
 
 the dir name is the course or workshop directory that you wish to build.
 This approach is very clunky now because it requires you to remember how to spell each directory.
@@ -20,7 +22,6 @@ in the future a dictionary would be ideal if i can figure out how to implement t
 import nbformat as nf
 import os
 import os.path as op
-from glob import glob
 import shutil as sh
 import sys
 import papermill as pm
@@ -133,7 +134,7 @@ def rebuild_notebook(notebook_path):
 
 
 # --- Get notebooks to rebuild - ONLY run if there are files provided to run---
-if len(sys.argv) > 1 :
+if len(sys.argv) > 1:
 
         # otherwise, just rebuild the notebooks that were changed but REMOVE any in the ignored category
         notebooks_to_rebuild = sys.argv[1:]
@@ -170,6 +171,7 @@ problem_notebooks = []
 
 # Run all notebooks and create markdown
 failed_count = 0
+total_notebooks_built = 0
 for total_num, notebook in enumerate(notebooks_to_rebuild):
 
     print("Building Lesson: ", notebook)
@@ -177,14 +179,16 @@ for total_num, notebook in enumerate(notebooks_to_rebuild):
     try:
         rebuild_notebook(notebook)
         print("SUCCESS! I built:", notebook)
+        total_notebooks_built += 1
     except Exception as ex:
         traceback.print_exception(type(ex), ex, ex.__traceback__)
         problem_notebooks.append(notebook)
         failed_count += 1
         continue
 
-print("I built, ", total_num, "notebooks. Unfortunately for you, ",
-      failed_count, "failed." )
+print("I built, ", total_notebooks_built, "notebooks.")
+if failed_count > 0:
+    print("Unfortunately for you, ", failed_count, "notebooks failed." )
 
 # If the tmp dir exists clean it out
 tmp_path = op.join('.', 'tmp')
