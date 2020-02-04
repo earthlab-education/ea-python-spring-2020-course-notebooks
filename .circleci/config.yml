@@ -39,13 +39,13 @@ jobs:
             done
       - run:
           name: Run Jupyter notebooks
-          working_directory: ~/earth-analytics-lessons
+          working_directory: ~/spring-2020-course-notebooks
           no_output_timeout: 900
           command: |
-            python scripts/run_notebooks.py in-class-demos/*
+            #python scripts/run_notebooks.py in-class-demos/*
             if [ -s changed_notebooks.txt ]; then
               filenames=$(cat changed_notebooks.txt)
               echo $filenames
               python scripts/run_notebooks.py $filenames
-              python scripts/run_notebooks.py in-class-demos/*
+              #python scripts/run_notebooks.py in-class-demos/*
             fi
