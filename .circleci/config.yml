@@ -11,7 +11,7 @@ jobs:
           name: Check conda environment
           command:
             # This should get added to the ea envt eventually
-            conda install -c conda-forge papermill &&
+            # conda install -c conda-forge papermill &&
             conda list
       - run:
           name: Get current branch
