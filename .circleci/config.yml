@@ -1,0 +1,51 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/spring-2020-course-notebooks
+    docker:
+      - image: earthlab/earth-analytics-python-env:latest
+
+    steps:
+      - checkout
+      - run:
+          name: Check conda environment
+          command:
+            conda list
+      - run:
+          name: Get current branch
+          working_directory: ~/spring-2020-course-notebooks
+          command: |
+            echo $(git rev-parse --abbrev-ref HEAD) > current_branch.txt
+      - run:
+          name: Get latest lesson commit
+          working_directory: ~/spring-2020-course-notebooks
+          command: |
+            # get current branch
+            branch=$(head -1 current_branch.txt)
+            # ACMRT -- only looks at changed files, not deleted ones
+            changed_files=$(git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r HEAD 2>&1)
+            # Get names of changed files
+            echo "${changed_files} ">> changed_files.txt
+            # Get just the Notebooks from the commit
+            python scripts/parse_commit.py
+            cat current_branch.txt
+            cat changed_files.txt
+      - run:
+          name: Display Modified Jupyter notebooks (.ipynb files)
+          command: |
+            cat changed_notebooks.txt | while read line
+            do
+              echo $line
+            done
+      - run:
+          name: Run Jupyter notebooks
+          working_directory: ~/spring-2020-course-notebooks
+          no_output_timeout: 900
+          command: |
+            #python scripts/run_notebooks.py in-class-demos/*
+            if [ -s changed_notebooks.txt ]; then
+              filenames=$(cat changed_notebooks.txt)
+              echo $filenames
+              python scripts/run_notebooks.py $filenames
+              #python scripts/run_notebooks.py in-class-demos/*
+            fi
