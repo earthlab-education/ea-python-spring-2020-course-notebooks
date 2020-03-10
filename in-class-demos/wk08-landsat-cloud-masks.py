@@ -136,7 +136,7 @@ plt.show()
 #
 #
 # * https://landsat.usgs.gov/landsat-8-cloud-cover-assessment-validation-data
-# * https://landsat.usgs.gov/sites/default/files/documents/lasrc_product_guide.pdf
+# * PDF of the landsat 8 handbook: https://prd-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/atoms/files/LSDS-1574_L8_Data_Users_Handbook-v5.0.pdf
 
 # + {"tags": ["hide"]}
 # This is the code for masking
@@ -344,8 +344,9 @@ landsat_pre_cl_free = em.mask_pixels(landsat_pre, cl_mask)
 # Alternatively, you can directly input your mask values and the pixel QA layer into the `mask_pixels` function. This is the easiest way to mask your data!
 
 # Call the earthpy mask function using pixel QA layer
-landsat_pre_cl_free = em.mask_pixels(
-    landsat_pre, landsat_qa, vals=all_masked_values)
+landsat_pre_cl_free = em.mask_pixels(landsat_pre, 
+                                     landsat_qa, 
+                                     vals=all_masked_values)
 
 # + {"caption": "CIR Composite image in grey scale with mask applied, covering the post-Cold Springs fire area on July 8, 2016."}
 # Plot the data
